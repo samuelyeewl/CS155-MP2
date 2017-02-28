@@ -203,6 +203,7 @@ class HiddenMarkovModel:
             A_num = [[0. for i in range(self.L)] for j in range(self.L)]
             O_num = [[0. for i in range(self.D)] for j in range(self.L)]
             A_start_num = [0. for i in range(self.L)]
+            A_start_den = [0. for i in range(self.L)]
             A_den = [0. for i in range(self.L)]
             O_den = [0. for i in range(self.L)]
 
@@ -274,8 +275,9 @@ class HiddenMarkovModel:
                             A_num[curr][nxt] += P_curr_nxt[curr][nxt]
 
             # M: Update self.A_start
+            A_start_den = sum(A_start_num)
             for nxt in range(self.L):
-                self.A_start[nxt] = A_start_num[nxt]
+                self.A_start[nxt] = A_start_num[nxt] / A_start_den
 
             # M: Update self.A
             for curr in range(self.L):
